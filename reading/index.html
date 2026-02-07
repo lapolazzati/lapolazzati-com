@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading — Lapo Lazzati</title>
+    <meta name="description" content="What I'm reading, watching, and learning from. A curated log of articles, books, and ideas worth sharing.">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav id="nav">
+    <div class="nav-inner">
+        <a href="/" class="nav-name">Lapo Lazzati</a>
+        <ul class="nav-links">
+            <li><a href="/research/">Research</a></li>
+            <li><a href="/reading/" class="active">Reading</a></li>
+            <li><a href="/experience/">Experience</a></li>
+            <li><a href="/#contact">Contact</a></li>
+        </ul>
+        <button class="nav-toggle" aria-label="Menu"><span></span><span></span></button>
+    </div>
+</nav>
+
+<header class="page-header">
+    <div class="col">
+        <div class="section-label reveal">The Bookshelf</div>
+        <h1 class="reveal stagger-1">What I'm Reading</h1>
+        <p class="page-desc reveal stagger-2">
+            Articles, books, podcasts, and ideas I'm consuming. Updated regularly — a living log of what's shaping how I think about building, AI, and Europe.
+        </p>
+    </div>
+</header>
+
+<section class="section">
+    <div class="col">
+
+        <!-- ── THIS WEEK ── -->
+        <div class="reading-group reveal">
+            <div class="reading-group-title">This Week — February 2026</div>
+
+            <a href="#" class="reading-item" target="_blank" rel="noopener">
+                <div>
+                    <div class="reading-title">Your first entry goes here</div>
+                    <div class="reading-author">Author or Source</div>
+                    <div class="reading-note">A brief note on why this matters or what you took from it.</div>
+                </div>
+                <div class="reading-type">Article</div>
+            </a>
+
+            <!-- ═══ ADD THIS WEEK'S READING HERE ═══
+            <a href="URL" class="reading-item" target="_blank" rel="noopener">
+                <div>
+                    <div class="reading-title">Title</div>
+                    <div class="reading-author">Author / Source</div>
+                    <div class="reading-note">Your takeaway or why it's worth reading.</div>
+                </div>
+                <div class="reading-type">Article / Book / Podcast / Video</div>
+            </a>
+            ═══════════════════════════════════════ -->
+        </div>
+
+        <!-- ── EARLIER THIS MONTH ── -->
+        <div class="reading-group reveal">
+            <div class="reading-group-title">Earlier — January 2026</div>
+
+            <a href="#" class="reading-item" target="_blank" rel="noopener">
+                <div>
+                    <div class="reading-title">Sample: The Economist on European AI policy</div>
+                    <div class="reading-author">The Economist</div>
+                    <div class="reading-note">Placeholder — replace with actual reading entries as you consume content.</div>
+                </div>
+                <div class="reading-type">Article</div>
+            </a>
+        </div>
+
+        <!-- ── ARCHIVE TEMPLATE ──
+        <div class="reading-group reveal">
+            <div class="reading-group-title">December 2025</div>
+            ... entries ...
+        </div>
+        -->
+
+    </div>
+</section>
+
+<footer>
+    <div class="col">
+        <div class="footer-inner">
+            <div>
+                <div class="footer-name">Lapo Lazzati</div>
+                <div class="footer-detail">Milan, Italy</div>
+            </div>
+            <div class="footer-links">
+                <a href="https://linkedin.com/in/lapolazzati" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="#" target="_blank" rel="noopener">X</a>
+                <a href="/#newsletter">Newsletter</a>
+                <a href="mailto:lapo.lazzati@gmail.com">Email</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const nav = document.getElementById('nav');
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                nav.classList.toggle('scrolled', window.scrollY > 60);
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

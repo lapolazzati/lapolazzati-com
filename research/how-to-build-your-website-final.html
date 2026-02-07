@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Build Your Personal Website with AI in 30 Minutes — Lapo Lazzati</title>
+    <meta name="description" content="A practical guide for founders and executives. What you need, how to structure it, the exact process, and what to avoid.">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav id="nav">
+    <div class="nav-inner">
+        <a href="/" class="nav-name">Lapo Lazzati</a>
+        <ul class="nav-links">
+            <li><a href="/research/" class="active">Research</a></li>
+            <li><a href="/reading/">Reading</a></li>
+            <li><a href="/experience/">Experience</a></li>
+            <li><a href="/#contact">Contact</a></li>
+        </ul>
+        <button class="nav-toggle" aria-label="Menu"><span></span><span></span></button>
+    </div>
+</nav>
+
+<article class="article-content">
+    <div class="col">
+        <div class="article-breadcrumb reveal">
+            <a href="/research/">Research</a> / How I AI
+        </div>
+
+        <h1 class="reveal stagger-1">How to Build Your Personal Website with AI in 30 Minutes</h1>
+
+        <div class="article-byline reveal stagger-2">
+            <span>Lapo Lazzati</span>
+            <span>February 2026</span>
+        </div>
+
+        <div class="article-body">
+            <p class="reveal stagger-3">
+                Your LinkedIn profile isn't enough. If you're building something—a company, a reputation, a body of work—you need a home on the internet that you control. Not a profile on someone else's platform. Your own domain. Your own design. Your own rules.
+            </p>
+
+            <p class="reveal stagger-4">
+                Most founders don't have time to learn web development, and hiring a designer means weeks of back-and-forth for something that should be simple. You're left choosing between expensive custom work or settling for a generic template.
+            </p>
+
+            <p class="reveal stagger-5">
+                AI changed this. You can now build a genuinely distinctive personal website in 30 minutes. Here's how.
+            </p>
+
+            <h2 class="reveal">What You Need</h2>
+
+            <p class="reveal">
+                <strong>1. Your story.</strong> Not your CV—your story. Write 3-4 paragraphs about who you are, what you've built, and what you care about. Be specific. "I'm a product builder" is generic. "I've built tech products that made the financial lives of millions of Brazilians easier" is real.
+            </p>
+
+            <p class="reveal">
+                <strong>2. A domain.</strong> Buy one. lapolazzati.com, yourname.com, whatever. Use Cloudflare or any registrar. Your name is fine.
+            </p>
+
+            <p class="reveal">
+                <strong>3. Content to share.</strong> Do you write? Research? Build? Figure out what you want the site to showcase. For me: newsletter, podcast, research, reading log, and experience.
+            </p>
+
+            <h2 class="reveal">The Structure That Works</h2>
+
+            <p class="reveal">
+                <strong>Homepage:</strong> Your portrait, your intro (the story you wrote), what you're building now, and how people can follow your work. No clever metaphors. No "I'm passionate about..." Just who you are and what you do.
+            </p>
+
+            <p class="reveal">
+                <strong>Sub-pages:</strong> Create separate pages for:
+            </p>
+            <ul class="reveal">
+                <li>Experience / CV</li>
+                <li>Research / Writing</li>
+                <li>Reading (what you're consuming—this is underrated; people want to know what influences you)</li>
+            </ul>
+
+            <p class="reveal">
+                <strong>Newsletter signup:</strong> Place it prominently. If you're not building an email list, you're wasting the traffic.
+            </p>
+
+            <p class="reveal">
+                <strong>Contact:</strong> A form, not just a mailto link. Use Formsubmit.co (free, no backend needed).
+            </p>
+
+            <h2 class="reveal">The 30-Minute Process</h2>
+
+            <h3 class="reveal">Step 1: Design direction (5 minutes)</h3>
+
+            <p class="reveal">
+                Don't start with "I want a website." Start with "I want it to feel like..." For mine: "European bookshop-café. Warm cream paper. Editorial typography. Like The Economist meets a Milanese design studio."
+            </p>
+
+            <p class="reveal">
+                Be specific about what you DON'T want. No neon gradients. No generic "AI bro" aesthetic. No stock photos of people pointing at whiteboards.
+            </p>
+
+            <h3 class="reveal">Step 2: Build it (15 minutes)</h3>
+
+            <p class="reveal">
+                Use Claude. The prompt matters. Don't say "build me a website." Say:
+            </p>
+
+            <div class="code-block reveal">
+                <code>"Build a personal website for [name]. Single-page centered layout like petergyang.com, with editorial typography (Playfair Display + DM Sans) and a cream/red color palette. Sections: Hero with portrait, Newsletter, Podcast, Experience, Contact form. Portrait image at [path]."</code>
+            </div>
+
+            <p class="reveal">
+                Then specify the pages:
+            </p>
+            <ul class="reveal">
+                <li>"Experience should be a separate page at /experience with full CV timeline"</li>
+                <li>"Create /research for published work"</li>
+                <li>"Create /reading for a reading log"</li>
+            </ul>
+
+            <p class="reveal">
+                The more specific you are, the better the result.
+            </p>
+
+            <h3 class="reveal">Step 3: Deploy (10 minutes)</h3>
+
+            <p class="reveal">
+                Use Cloudflare Pages. Free, fast, three commands:
+            </p>
+
+            <div class="code-block reveal">
+                <code>wrangler login<br>
+wrangler pages project create yoursite<br>
+wrangler pages deploy ./website --project-name yoursite</code>
+            </div>
+
+            <p class="reveal">
+                Add your custom domain in the Cloudflare dashboard. SSL certificate provisions automatically. Done.
+            </p>
+
+            <h2 class="reveal">What to Avoid</h2>
+
+            <p class="reveal">
+                <strong>Don't use a template.</strong> Templates look like templates. Everyone can tell. AI can build something distinctive if you give it direction.
+            </p>
+
+            <p class="reveal">
+                <strong>Don't overthink the design.</strong> Pick 2-3 fonts. Pick 2-3 colors. Use them consistently. That's 90% of good design.
+            </p>
+
+            <p class="reveal">
+                <strong>Don't write "About Me."</strong> Write "Hello, I'm [name]." The second is how humans talk.
+            </p>
+
+            <p class="reveal">
+                <strong>Don't add a blog if you won't write.</strong> An abandoned blog is worse than no blog. If you write weekly, link to your newsletter or Twitter.
+            </p>
+
+            <p class="reveal">
+                <strong>Don't forget mobile.</strong> 60% of visitors use phones. AI-built sites are usually responsive by default, but check.
+            </p>
+
+            <h2 class="reveal">What Happens Next</h2>
+
+            <p class="reveal">
+                <strong>Link to it everywhere.</strong> Email signature. Twitter bio. LinkedIn. Everywhere.
+            </p>
+
+            <p class="reveal">
+                <strong>Keep it updated.</strong> Add new research. Update your reading log. Don't let it go stale.
+            </p>
+
+            <p class="reveal">
+                <strong>Use it as your base.</strong> When someone asks "what do you do?", send them there. When you publish something, post it there. Your website is the hub. Everything else is a spoke.
+            </p>
+
+            <h2 class="reveal">The Real Advantage</h2>
+
+            <p class="reveal">
+                I now have a place that's mine. When I write something, when I build something, when I want to share what I'm thinking about—it goes here first. Twitter can change its algorithm. LinkedIn can bury your posts. Your domain? That's yours.
+            </p>
+
+            <p class="reveal">
+                And it took 30 minutes.
+            </p>
+
+            <p class="reveal">
+                If you're building something that matters, you need a home for it. Not a profile. A home.
+            </p>
+        </div>
+
+        <div class="article-footer reveal">
+            <a href="/research/" class="back-link">← Back to Research</a>
+        </div>
+    </div>
+</article>
+
+<footer>
+    <div class="col">
+        <div class="footer-inner">
+            <div>
+                <div class="footer-name">Lapo Lazzati</div>
+                <div class="footer-detail">Milan, Italy</div>
+            </div>
+            <div class="footer-links">
+                <a href="https://linkedin.com/in/lapolazzati" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="#" target="_blank" rel="noopener">X</a>
+                <a href="/#newsletter">Newsletter</a>
+                <a href="mailto:lapo.lazzati@gmail.com">Email</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const nav = document.getElementById('nav');
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                nav.classList.toggle('scrolled', window.scrollY > 60);
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
