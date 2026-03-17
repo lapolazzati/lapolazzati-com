@@ -1,0 +1,1395 @@
+      <!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax DD AI — Due Diligence Fiscale Assistita</title>
+
+    <!-- Fonts: Bodoni Moda (editorial serif) + DM Sans (clean body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;0,6..96,900;1,6..96,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===========================================
+           CSS CUSTOM PROPERTIES (THEME)
+           Warm editorial — professional for tax advisors
+           =========================================== */
+        :root {
+            /* Colors */
+            --bg-outer: #1c1917;
+            --bg-page: #faf8f4;
+            --bg-page-alt: #f3efe8;
+            --text-primary: #1c1917;
+            --text-secondary: #57534e;
+            --text-muted: #a8a29e;
+            --accent-warm: #b45309;
+            --accent-warm-light: #f59e0b;
+            --accent-green: #059669;
+            --accent-red: #dc2626;
+            --accent-amber: #d97706;
+            --border-light: #e7e5e4;
+            --shadow-soft: rgba(28, 25, 23, 0.08);
+
+            /* Tab colors */
+            --tab-1: #b45309;
+            --tab-2: #059669;
+            --tab-3: #6366f1;
+            --tab-4: #dc2626;
+            --tab-5: #0891b2;
+            --tab-6: #7c3aed;
+
+            /* Typography — MUST use clamp() */
+            --font-display: 'Bodoni Moda', serif;
+            --font-body: 'DM Sans', sans-serif;
+            --title-size: clamp(1.8rem, 5vw, 3.8rem);
+            --h2-size: clamp(1.3rem, 3.5vw, 2.4rem);
+            --h3-size: clamp(1rem, 2.5vw, 1.6rem);
+            --body-size: clamp(0.8rem, 1.4vw, 1.1rem);
+            --small-size: clamp(0.65rem, 1vw, 0.85rem);
+            --label-size: clamp(0.55rem, 0.8vw, 0.72rem);
+
+            /* Spacing — MUST use clamp() */
+            --slide-padding: clamp(1.5rem, 4vw, 4rem);
+            --content-gap: clamp(0.75rem, 2vw, 1.5rem);
+            --element-gap: clamp(0.25rem, 1vw, 0.75rem);
+
+            /* Animation */
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --duration-normal: 0.7s;
+        }
+
+        /* ===========================================
+           BASE STYLES
+           =========================================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* ===========================================
+           VIEWPORT FITTING: MANDATORY BASE STYLES
+           =========================================== */
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-height: 100%;
+            overflow: hidden;
+            padding: var(--slide-padding);
+        }
+
+        img, .image-container {
+            max-width: 100%;
+            max-height: min(50vh, 400px);
+            object-fit: contain;
+        }
+
+        @media (max-height: 700px) {
+            :root {
+                --slide-padding: clamp(0.75rem, 3vw, 2rem);
+                --content-gap: clamp(0.4rem, 1.5vw, 1rem);
+                --title-size: clamp(1.25rem, 4.5vw, 2.5rem);
+                --h2-size: clamp(1rem, 3vw, 1.75rem);
+            }
+        }
+
+        @media (max-height: 600px) {
+            :root {
+                --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem);
+                --content-gap: clamp(0.3rem, 1vw, 0.75rem);
+                --title-size: clamp(1.1rem, 4vw, 2rem);
+                --body-size: clamp(0.7rem, 1.2vw, 0.95rem);
+            }
+            .nav-dots, .keyboard-hint, .decorative, .tab-strip {
+                display: none;
+            }
+        }
+
+        @media (max-height: 500px) {
+            :root {
+                --slide-padding: clamp(0.4rem, 2vw, 1rem);
+                --title-size: clamp(1rem, 3.5vw, 1.5rem);
+                --h2-size: clamp(0.9rem, 2.5vw, 1.25rem);
+                --body-size: clamp(0.65rem, 1vw, 0.85rem);
+            }
+        }
+
+        @media (max-width: 600px) {
+            :root {
+                --title-size: clamp(1.25rem, 7vw, 2.5rem);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.2s !important;
+            }
+            html { scroll-behavior: auto; }
+        }
+
+        /* ===========================================
+           NOTEBOOK TABS THEME
+           Paper card on dark background with warm tabs
+           =========================================== */
+        body {
+            background: var(--bg-outer);
+            font-family: var(--font-body);
+            color: var(--text-primary);
+        }
+
+        /* Each slide is a paper card floating on dark */
+        .slide {
+            background: var(--bg-outer);
+            align-items: center;
+            justify-content: center;
+            padding: clamp(0.5rem, 2vw, 1.5rem);
+        }
+
+        .paper {
+            background: var(--bg-page);
+            border-radius: clamp(8px, 1.5vw, 16px);
+            box-shadow: 0 4px 30px var(--shadow-soft),
+                        0 1px 3px rgba(0,0,0,0.06);
+            width: min(95vw, 1100px);
+            max-height: min(92vh, 750px);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .paper-content {
+            flex: 1;
+            padding: clamp(1.5rem, 4vw, 3.5rem);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: var(--content-gap);
+            overflow: hidden;
+        }
+
+        /* Tab strip on right edge */
+        .tab-strip {
+            position: absolute;
+            right: calc(-1 * clamp(18px, 2.5vw, 32px));
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: clamp(3px, 0.5vw, 6px);
+            z-index: 10;
+        }
+
+        .tab {
+            width: clamp(18px, 2.5vw, 32px);
+            border-radius: 0 clamp(4px, 0.5vw, 8px) clamp(4px, 0.5vw, 8px) 0;
+            opacity: 0.4;
+            transition: opacity 0.3s, height 0.3s;
+        }
+
+        .tab.active {
+            opacity: 1;
+        }
+
+        .tab:nth-child(1) { background: var(--tab-1); height: clamp(20px, 3vh, 35px); }
+        .tab:nth-child(2) { background: var(--tab-2); height: clamp(28px, 4vh, 45px); }
+        .tab:nth-child(3) { background: var(--tab-3); height: clamp(35px, 5vh, 55px); }
+        .tab:nth-child(4) { background: var(--tab-4); height: clamp(28px, 4vh, 45px); }
+        .tab:nth-child(5) { background: var(--tab-5); height: clamp(20px, 3vh, 35px); }
+        .tab:nth-child(6) { background: var(--tab-6); height: clamp(25px, 3.5vh, 40px); }
+
+        /* Binder holes on left */
+        .binder-holes {
+            position: absolute;
+            left: clamp(8px, 1.5vw, 18px);
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: clamp(20px, 4vh, 40px);
+        }
+
+        .binder-hole {
+            width: clamp(6px, 1vw, 10px);
+            height: clamp(6px, 1vw, 10px);
+            border-radius: 50%;
+            border: 1.5px solid var(--border-light);
+            background: var(--bg-outer);
+        }
+
+        /* ===========================================
+           TYPOGRAPHY
+           =========================================== */
+        h1 {
+            font-family: var(--font-display);
+            font-size: var(--title-size);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: var(--h2-size);
+            font-weight: 700;
+            line-height: 1.15;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-family: var(--font-display);
+            font-size: var(--h3-size);
+            font-weight: 400;
+            line-height: 1.2;
+            color: var(--text-secondary);
+        }
+
+        p, li {
+            font-family: var(--font-body);
+            font-size: var(--body-size);
+            line-height: 1.55;
+            color: var(--text-secondary);
+        }
+
+        .label {
+            font-family: var(--font-body);
+            font-size: var(--label-size);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+        }
+
+        .accent { color: var(--accent-warm); }
+        .accent-green { color: var(--accent-green); }
+
+        /* ===========================================
+           SLIDE-SPECIFIC LAYOUTS
+           =========================================== */
+
+        /* --- Title slide --- */
+        .title-slide .paper-content {
+            align-items: center;
+            text-align: center;
+            gap: clamp(0.5rem, 1.5vw, 1.2rem);
+        }
+
+        .logo-mark {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 7vw, 5.5rem);
+            font-weight: 900;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .logo-mark sup {
+            font-size: 0.35em;
+            color: var(--accent-warm);
+            vertical-align: super;
+            font-weight: 700;
+        }
+
+        .title-slide .tagline {
+            font-family: var(--font-display);
+            font-size: clamp(0.9rem, 2vw, 1.5rem);
+            font-weight: 400;
+            font-style: italic;
+            color: var(--text-secondary);
+            max-width: 500px;
+        }
+
+        .divider {
+            width: clamp(40px, 8vw, 80px);
+            height: 2px;
+            background: var(--accent-warm);
+            border: none;
+        }
+
+        .title-slide .subtitle {
+            font-size: var(--small-size);
+            color: var(--text-muted);
+        }
+
+        /* --- Problem slide --- */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+            gap: clamp(0.5rem, 1.5vw, 1rem);
+        }
+
+        .problem-card {
+            background: var(--bg-page-alt);
+            border-radius: clamp(6px, 1vw, 10px);
+            padding: clamp(0.6rem, 1.5vw, 1.2rem);
+            border-left: 3px solid var(--accent-red);
+        }
+
+        .problem-card .number {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3.5vw, 2.8rem);
+            font-weight: 700;
+            color: var(--accent-red);
+            line-height: 1;
+        }
+
+        .problem-card .desc {
+            font-size: var(--small-size);
+            color: var(--text-secondary);
+            margin-top: clamp(2px, 0.3vw, 6px);
+        }
+
+        /* --- Solution/feature cards --- */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+            gap: clamp(0.5rem, 1.2vw, 0.8rem);
+        }
+
+        .feature-card {
+            background: var(--bg-page-alt);
+            border-radius: clamp(6px, 1vw, 10px);
+            padding: clamp(0.6rem, 1.5vw, 1.1rem);
+            border-top: 3px solid var(--accent-warm);
+        }
+
+        .feature-card.green { border-top-color: var(--accent-green); }
+        .feature-card.blue { border-top-color: var(--tab-5); }
+
+        .feature-card h4 {
+            font-family: var(--font-display);
+            font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: clamp(2px, 0.3vw, 4px);
+        }
+
+        .feature-card p {
+            font-size: var(--small-size);
+            line-height: 1.4;
+        }
+
+        /* --- Screenshot slides --- */
+        .screenshot-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .screenshot {
+            max-width: 100%;
+            max-height: min(52vh, 420px);
+            object-fit: contain;
+            border-radius: clamp(6px, 1vw, 10px);
+            border: 1px solid var(--border-light);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .screenshot-caption {
+            text-align: center;
+            font-size: var(--small-size);
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: clamp(4px, 0.5vw, 8px);
+        }
+
+        /* --- Checks list --- */
+        .checks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+            gap: clamp(0.3rem, 0.8vw, 0.6rem);
+        }
+
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: clamp(4px, 0.5vw, 8px);
+            padding: clamp(0.35rem, 0.8vw, 0.6rem);
+            background: var(--bg-page-alt);
+            border-radius: clamp(4px, 0.6vw, 8px);
+        }
+
+        .check-dot {
+            width: clamp(6px, 0.8vw, 9px);
+            height: clamp(6px, 0.8vw, 9px);
+            border-radius: 50%;
+            background: var(--accent-green);
+            flex-shrink: 0;
+            margin-top: clamp(3px, 0.4vw, 5px);
+        }
+
+        .check-item .check-name {
+            font-size: var(--small-size);
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .check-item .check-desc {
+            font-size: var(--label-size);
+            color: var(--text-muted);
+            line-height: 1.3;
+            margin-top: 1px;
+        }
+
+        /* --- Flow steps --- */
+        .flow-steps {
+            display: flex;
+            gap: clamp(0.3rem, 1vw, 0.8rem);
+            align-items: stretch;
+        }
+
+        .flow-step {
+            flex: 1;
+            background: var(--bg-page-alt);
+            border-radius: clamp(6px, 1vw, 10px);
+            padding: clamp(0.5rem, 1.2vw, 1rem);
+            position: relative;
+            text-align: center;
+        }
+
+        .flow-step .step-num {
+            font-family: var(--font-display);
+            font-size: clamp(1.2rem, 2.5vw, 2rem);
+            font-weight: 700;
+            color: var(--accent-warm);
+            line-height: 1;
+        }
+
+        .flow-step h4 {
+            font-family: var(--font-display);
+            font-size: clamp(0.8rem, 1.3vw, 1rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-top: clamp(2px, 0.3vw, 4px);
+        }
+
+        .flow-step p {
+            font-size: var(--label-size);
+            margin-top: clamp(2px, 0.2vw, 3px);
+        }
+
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            flex-shrink: 0;
+        }
+
+        /* --- Quote/emphasis --- */
+        .quote-block {
+            border-left: 3px solid var(--accent-warm);
+            padding-left: clamp(0.8rem, 2vw, 1.5rem);
+            margin: clamp(0.3rem, 1vw, 0.6rem) 0;
+        }
+
+        .quote-block p {
+            font-family: var(--font-display);
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            font-style: italic;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        /* --- CTA slide --- */
+        .cta-box {
+            background: var(--bg-outer);
+            color: white;
+            border-radius: clamp(6px, 1vw, 12px);
+            padding: clamp(1rem, 2.5vw, 2rem);
+            text-align: center;
+        }
+
+        .cta-box h3 {
+            color: white;
+            font-family: var(--font-display);
+            font-size: var(--h3-size);
+        }
+
+        .cta-box p {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .cta-box .email-link {
+            display: inline-block;
+            margin-top: clamp(0.4rem, 1vw, 0.8rem);
+            color: var(--accent-warm-light);
+            font-weight: 600;
+            font-size: var(--body-size);
+            text-decoration: none;
+            border-bottom: 1px solid var(--accent-warm-light);
+        }
+
+        /* ===========================================
+           ANIMATIONS
+           Trigger via .visible class (added by JS)
+           =========================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity var(--duration-normal) var(--ease-out-expo),
+                        transform var(--duration-normal) var(--ease-out-expo);
+        }
+
+        .slide.visible .reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal:nth-child(1) { transition-delay: 0.05s; }
+        .reveal:nth-child(2) { transition-delay: 0.12s; }
+        .reveal:nth-child(3) { transition-delay: 0.2s; }
+        .reveal:nth-child(4) { transition-delay: 0.28s; }
+        .reveal:nth-child(5) { transition-delay: 0.35s; }
+        .reveal:nth-child(6) { transition-delay: 0.42s; }
+
+        /* Slide number */
+        .slide-number {
+            position: absolute;
+            bottom: clamp(6px, 1vw, 12px);
+            right: clamp(10px, 2vw, 20px);
+            font-family: var(--font-body);
+            font-size: var(--label-size);
+            color: var(--text-muted);
+        }
+
+        /* ===========================================
+           PROGRESS BAR
+           =========================================== */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--accent-warm);
+            z-index: 1000;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        /* ===========================================
+           NAV DOTS
+           =========================================== */
+        .nav-dots {
+            position: fixed;
+            right: clamp(8px, 1.5vw, 16px);
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: clamp(4px, 0.6vw, 8px);
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: clamp(5px, 0.6vw, 8px);
+            height: clamp(5px, 0.6vw, 8px);
+            border-radius: 50%;
+            background: rgba(255,255,255,0.25);
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            border: none;
+            padding: 0;
+        }
+
+        .nav-dot.active {
+            background: var(--accent-warm);
+            transform: scale(1.4);
+        }
+
+        /* ===========================================
+           TWO COLUMN LAYOUT
+           =========================================== */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(1rem, 2.5vw, 2rem);
+            align-items: center;
+        }
+
+        @media (max-width: 700px) {
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Bullet list */
+        .bullet-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: clamp(0.3rem, 0.7vw, 0.5rem);
+        }
+
+        .bullet-list li {
+            padding-left: clamp(12px, 1.5vw, 20px);
+            position: relative;
+            font-size: var(--body-size);
+        }
+
+        .bullet-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: clamp(6px, 0.7vw, 9px);
+            width: clamp(4px, 0.5vw, 6px);
+            height: clamp(4px, 0.5vw, 6px);
+            border-radius: 50%;
+            background: var(--accent-warm);
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Navigation dots -->
+    <nav class="nav-dots" id="navDots" aria-label="Navigazione slide"></nav>
+
+    <!-- ============================================
+         SLIDE 1: TITLE
+         ============================================ -->
+    <section class="slide title-slide" data-slide="0">
+        <div class="paper">
+            <div class="binder-holes decorative">
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+            </div>
+            <div class="tab-strip decorative">
+                <div class="tab active"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+            </div>
+            <div class="paper-content">
+                <p class="label reveal">Due Diligence Fiscale</p>
+                <div class="logo-mark reveal">Tax DD<sup>AI</sup></div>
+                <hr class="divider reveal">
+                <p class="tagline reveal">La due diligence fiscale che richiedeva settimane,<br>ora richiede ore.</p>
+                <p class="subtitle reveal">Presentazione prodotto &middot; 2026</p>
+            </div>
+            <span class="slide-number">1 / 14</span>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SLIDE 2: IL PROBLEMA — REVENUE LEFT ON THE TABLE
+         ============================================ -->
+    <section class="slide" data-slide="1">
+        <div class="paper">
+            <div class="binder-holes decorative">
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+            </div>
+            <div class="tab-strip decorative">
+                <div class="tab"></div>
+                <div class="tab active"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+            </div>
+            <div class="paper-content">
+                <p class="label reveal">Il problema</p>
+                <h2 class="reveal">Quante due diligence <span class="accent">rifiutate</span><br>perché non c'era il team?</h2>
+                <p class="reveal" style="max-width: 650px;">Ogni due diligence fiscale richiede giorni di lavoro manuale: aprire centinaia di PDF, estrarre numeri, confrontare dichiarazioni, calcolare scadenze, verificare ogni F24. Lo studio che ne fa quattro all'anno non è meno competente: ha meno braccia.</p>
+                <div class="problem-grid reveal">
+                    <div class="problem-card">
+                        <div class="number">4</div>
+                        <div class="desc">DD all'anno, il massimo che uno studio medio riesce a gestire</div>
+                    </div>
+                    <div class="problem-card">
+                        <div class="number">200+</div>
+                        <div class="desc">PDF da aprire, confrontare e incrociare per ogni pratica</div>
+                    </div>
+                    <div class="problem-card">
+                        <div class="number">5-7 gg</div>
+                        <div class="desc">di lavoro manuale per le sole verifiche formali</div>
+                    </div>
+                </div>
+                <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted); margin-top: clamp(2px, 0.3vw, 4px);">Quando un cliente chiede più incarichi di quelli che lo studio riesce a gestire, il lavoro va alla concorrenza.</p>
+            </div>
+            <span class="slide-number">2 / 14</span>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SLIDE 3: IL RISCHIO
+         ============================================ -->
+    <section class="slide" data-slide="2">
+        <div class="paper">
+            <div class="binder-holes decorative">
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+            </div>
+            <div class="tab-strip decorative">
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab active"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+            </div>
+            <div class="paper-content">
+                <p class="label reveal">Il rischio</p>
+                <h2 class="reveal">Il lavoro manuale<br>non scala e non perdona</h2>
+                <div class="quote-block reveal">
+                    <p>Con centinaia di righe di dati da incrociare a mano, il rischio non è se qualcosa sfugge. È quanto.</p>
+                </div>
+                <ul class="bullet-list reveal">
+                    <li>Un F24 mancante su un codice tributo 1040 di gennaio? Invisibile tra 200 pagine.</li>
+                    <li>Un versamento IRES in ritardo di 3 giorni senza ravvedimento operoso? Serve confrontare tre documenti diversi.</li>
+                    <li>Una discrepanza tra il volume d'affari del bilancio e il VE50 della dichiarazione IVA? Richiede un foglio Excel dedicato.</li>
+                </ul>
+                <p class="reveal" style="font-weight: 500; color: var(--text-primary);">Il professionista che firma la relazione si assume la responsabilità. Lo strumento deve essere all'altezza.</p>
+            </div>
+            <span class="slide-number">3 / 14</span>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SLIDE 4: LA SOLUZIONE
+         ============================================ -->
+    <section class="slide" data-slide="3">
+        <div class="paper">
+            <div class="binder-holes decorative">
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+            </div>
+            <div class="tab-strip decorative">
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab active"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+            </div>
+            <div class="paper-content">
+                <p class="label reveal">La soluzione</p>
+                <h2 class="reveal">Tax DD<sup style="font-size:0.5em; color: var(--accent-warm);">AI</sup> fa il lavoro ripetitivo.<br><span class="accent-green">Lei fa l'analisi.</span></h2>
+                <p class="reveal" style="max-width: 600px;">Carichi l'archivio del cliente (anche un unico ZIP con tutti i PDF dentro) e in trenta minuti sa già cosa è presente, cosa manca, e dove il sistema ha trovato qualcosa che non torna.</p>
+                <div class="flow-steps reveal">
+                    <div class="flow-step">
+                        <div class="step-num">1</div>
+                        <h4>Carica</h4>
+                        <p>ZIP o singoli PDF, trascinati nella pagina</p>
+                    </div>
+                    <div class="flow-arrow">&rarr;</div>
+                    <div class="flow-step">
+                        <div class="step-num">2</div>
+                        <h4>Classifica</h4>
+                        <p>L'AI identifica ogni documento automaticamente</p>
+                    </div>
+                    <div class="flow-arrow">&rarr;</div>
+                    <div class="flow-step">
+                        <div class="step-num">3</div>
+                        <h4>Estrai</h4>
+                        <p>I dati strutturati vengono letti dai PDF</p>
+                    </div>
+                    <div class="flow-arrow">&rarr;</div>
+                    <div class="flow-step">
+                        <div class="step-num">4</div>
+                        <h4>Verifica</h4>
+                        <p>10 controlli incrociati automatici</p>
+                    </div>
+                </div>
+                <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted); text-align: center; margin-top: clamp(2px, 0.3vw, 6px);">Da quel punto, lavora solo sulle anomalie, non su tutto il materiale.</p>
+            </div>
+            <span class="slide-number">4 / 14</span>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SLIDE 5: IL BUSINESS CASE — ROI
+         ============================================ -->
+    <section class="slide" data-slide="4">
+        <div class="paper">
+            <div class="binder-holes decorative">
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+            </div>
+            <div class="tab-strip decorative">
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab active"></div>
+                <div class="tab"></div>
+            </div>
+            <div class="paper-content">
+                <p class="label reveal">Il ritorno</p>
+                <h2 class="reveal">Ogni verifica in meno è un<br><span class="accent-green">incarico in più.</span></h2>
+                <div class="two-col reveal">
+                    <div>
+                        <div class="problem-card" style="border-left-color: var(--text-muted);">
+                            <p class="label" style="margin-bottom: clamp(2px, 0.3vw, 4px);">Oggi, senza lo strumento</p>
+                            <div class="number" style="color: var(--text-secondary);">4</div>
+                            <div class="desc">DD all'anno &times; 25.000 &euro;</div>
+                            <div style="font-family: var(--font-display); font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 700; color: var(--text-secondary); margin-top: clamp(4px, 0.5vw, 8px);">= 100.000 &euro;</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="problem-card" style="border-left-color: var(--accent-green);">
+                            <p class="label" style="margin-bottom: clamp(2px, 0.3vw, 4px);">Con Tax DD AI</p>
+                            <div class="number" style="color: var(--accent-green);">15-20</div>
+                            <div class="desc">DD all'anno &times; 25.000 &euro;</div>
+                            <div style="font-family: var(--font-display); font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 700; color: var(--accent-green); margin-top: clamp(4px, 0.5vw, 8px);">= 375.000&ndash;500.000 &euro;</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="quote-block reveal">
+                    <p style="font-size: var(--body-size);">Le verifiche formali che richiedevano giorni ora richiedono minuti. Il professionista lavora solo sulle anomalie. E accetta il prossimo incarico invece di rifiutarlo.</p>
+                </div>
+            </div>
+            <span class="slide-number">5 / 14</span>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SLIDE 6: SCREENSHOT PANORAMICA
+         ============================================ -->
+    <section class="slide" data-slide="5">
+        <div class="paper">
+            <div class="binder-holes decorative">
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+            </div>
+            <div class="tab-strip decorative">
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab active"></div>
+            </div>
+            <div class="paper-content" style="gap: clamp(0.3rem, 0.8vw, 0.6rem);">
+                <p class="label reveal">La panoramica</p>
+                <h2 class="reveal" style="font-size: var(--h3-size);">Tutto lo stato della pratica in un colpo d'occhio</h2>
+                <div class="screenshot-container reveal">
+                    <img src="product-images/panoramica.png" alt="Schermata panoramica della pratica" class="screenshot">
+                </div>
+                <p class="screenshot-caption reveal">Verifiche con semaforo (rosso/giallo/verde), stato documenti, azioni rapide</p>
+            </div>
+            <span class="slide-number">6 / 14</span>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SLIDE 7: SCREENSHOT DOCUMENTI
+         ============================================ -->
+    <section class="slide" data-slide="6">
+        <div class="paper">
+            <div class="binder-holes decorative">
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+            </div>
+            <div class="tab-strip decorative">
+                <div class="tab active"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+            </div>
+            <div class="paper-content" style="gap: clamp(0.3rem, 0.8vw, 0.6rem);">
+                <p class="label reveal">Classificazione automatica</p>
+                <h2 class="reveal" style="font-size: var(--h3-size);">132 documenti classificati in pochi secondi</h2>
+                <div class="screenshot-container reveal">
+                    <img src="product-images/documenti.png" alt="Pannello documenti con classificazione" class="screenshot">
+                </div>
+                <p class="screenshot-caption reveal">Tipo, anno fiscale e stato di estrazione per ogni documento , correggibile con un clic</p>
+            </div>
+            <span class="slide-number">7 / 14</span>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SLIDE 8: SCREENSHOT VERIFICHE
+         ============================================ -->
+    <section class="slide" data-slide="7">
+        <div class="paper">
+            <div class="binder-holes decorative">
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+            </div>
+            <div class="tab-strip decorative">
+                <div class="tab"></div>
+                <div class="tab active"></div>
+                <div class="tab"></div>
+                <div class="tab active"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+            </div>
+            <div class="paper-content" style="gap: clamp(0.3rem, 0.8vw, 0.6rem);">
+                <p class="label reveal">Le verifiche automatiche</p>
+                <h2 class="reveal" style="font-size: var(--h3-size);">8 verifiche eseguite. Anomalie evidenziate immediatamente</h2>
+                <div class="screenshot-container reveal">
+                    <img src="product-images/verifiche.png" alt="Pannello verifiche con semafori" class="screenshot">
+                </div>
+                <p class="screenshot-caption reveal">Rosso = anomalia critica &middot; Giallo = attenzione &middot; Verde = conforme</p>
+            </div>
+            <span class="slide-number">8 / 14</span>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SLIDE 9: SCREENSHOT DETTAGLIO CHECK
+         ============================================ -->
+    <section class="slide" data-slide="8">
+        <div class="paper">
+            <div class="binder-holes decorative">
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+            </div>
+            <div class="tab-strip decorative">
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab active"></div>
+                <div class="tab"></div>
+                <div class="tab active"></div>
+                <div class="tab"></div>
+            </div>
+            <div class="paper-content" style="gap: clamp(0.3rem, 0.8vw, 0.6rem);">
+                <p class="label reveal">Il dettaglio</p>
+                <h2 class="reveal" style="font-size: var(--h3-size);">Ogni riga confrontata. Ogni anomalia spiegata</h2>
+                <div class="screenshot-container reveal">
+                    <img src="product-images/check-detail.png" alt="Dettaglio verifica 770 vs F24" class="screenshot">
+                </div>
+                <p class="screenshot-caption reveal">Ritenute 770 vs F24: codice tributo, importi, scadenze, delta e stato per ogni riga</p>
+            </div>
+            <span class="slide-number">9 / 14</span>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SLIDE 10: 10 VERIFICHE
+         ============================================ -->
+    <section class="slide" data-slide="9">
+        <div class="paper">
+            <div class="binder-holes decorative">
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+            </div>
+            <div class="tab-strip decorative">
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab active"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab active"></div>
+            </div>
+            <div class="paper-content">
+                <p class="label reveal">Controlli incrociati</p>
+                <h2 class="reveal">10 verifiche automatiche</h2>
+                <p class="reveal" style="max-width: 550px;">Ogni verifica confronta dati estratti da documenti diversi, esattamente come farebbe un senior tax advisor, ma in secondi invece che in ore.</p>
+                <div class="checks-grid reveal">
+                    <div class="check-item">
+                        <div class="check-dot"></div>
+                        <div>
+                            <div class="check-name">Ritenute 770 vs F24</div>
+                            <div class="check-desc">Ogni riga del Quadro ST vs versamenti</div>
+                        </div>
+                    </div>
+                    <div class="check-item">
+                        <div class="check-dot"></div>
+                        <div>
+                            <div class="check-name">IRES/IRAP vs F24</div>
+                            <div class="check-desc">Saldo e acconti con metodo storico</div>
+                        </div>
+                    </div>
+                    <div class="check-item">
+                        <div class="check-dot"></div>
+                        <div>
+                            <div class="check-name">Liquidazioni IVA vs F24</div>
+                            <div class="check-desc">Mensile o trimestrale, con interessi 1%</div>
+                        </div>
+                    </div>
+                    <div class="check-item">
+                        <div class="check-dot"></div>
+                        <div>
+                            <div class="check-name">LIPE / VH / Liquidazioni</div>
+                            <div class="check-desc">Cross-check comunicazioni AdE</div>
+                        </div>
+                    </div>
+                    <div class="check-item">
+                        <div class="check-dot"></div>
+                        <div>
+                            <div class="check-name">Riconciliazione VE50</div>
+                            <div class="check-desc">Volume d'affari CE vs Dich. IVA</div>
+                        </div>
+                    </div>
+                    <div class="check-item">
+                        <div class="check-dot"></div>
+                        <div>
+                            <div class="check-name">RF4 vs Bilancio</div>
+                            <div class="check-desc">Utile Redditi SC vs Conto Economico</div>
+                        </div>
+                    </div>
+                    <div class="check-item">
+                        <div class="check-dot"></div>
+                        <div>
+                            <div class="check-name">Trend Quadro RF</div>
+                            <div class="check-desc">Variazioni anno su anno > 20%</div>
+                        </div>
+                    </div>
+                    <div class="check-item">
+                        <div class="check-dot"></div>
+                        <div>
+                            <div class="check-name">Periodi d'imposta</div>
+                            <div class="check-desc">Termini di accertamento e scadenze</div>
+                        </div>
+                    </div>
+                    <div class="check-item">
+                        <div class="check-dot"></div>
+                        <div>
+                            <div class="check-name">Inerenza</div>
+                            <div class="check-desc">Rischio IRES vs IRAP per categoria</div>
+                        </div>
+                    </div>
+                    <div class="check-item">
+                        <div class="check-dot"></div>
+                        <div>
+                            <div class="check-name">Ravvedimento</div>
+                            <div class="check-desc">Coerenza flag e calcolo sanzioni</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="slide-number">10 / 14</span>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SLIDE 11: CHECKLIST
+         ============================================ -->
+    <section class="slide" data-slide="10">
+        <div class="paper">
+            <div class="binder-holes decorative">
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+            </div>
+            <div class="tab-strip decorative">
+                <div class="tab active"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab active"></div>
+                <div class="tab"></div>
+            </div>
+            <div class="paper-content" style="gap: clamp(0.3rem, 0.8vw, 0.6rem);">
+                <p class="label reveal">Completezza documentale</p>
+                <h2 class="reveal" style="font-size: var(--h3-size);">Sa subito cosa manca, prima di iniziare</h2>
+                <div class="screenshot-container reveal">
+                    <img src="product-images/checklist.png" alt="Checklist documenti per anno fiscale" class="screenshot">
+                </div>
+                <p class="screenshot-caption reveal">Matrice tipo documento &times; anno fiscale: cosa c'è, cosa manca, cosa va richiesto al cliente</p>
+            </div>
+            <span class="slide-number">11 / 14</span>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SLIDE 12: GIUDIZIO PROFESSIONALE
+         ============================================ -->
+    <section class="slide" data-slide="11">
+        <div class="paper">
+            <div class="binder-holes decorative">
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+            </div>
+            <div class="tab-strip decorative">
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab active"></div>
+                <div class="tab"></div>
+                <div class="tab active"></div>
+            </div>
+            <div class="paper-content">
+                <p class="label reveal">Il suo ruolo</p>
+                <h2 class="reveal">Lo strumento non sostituisce<br>il giudizio professionale.<br><span class="accent-green">Lo prepara.</span></h2>
+                <div class="quote-block reveal">
+                    <p>Tax DD AI fa emergere i dati e segnala le anomalie. Non interpreta le cause e non dà un parere.</p>
+                </div>
+                <div class="feature-grid reveal">
+                    <div class="feature-card green">
+                        <h4>Cosa fa il sistema</h4>
+                        <p>Legge i PDF, estrae i numeri, incrocia i dati, segnala le discrepanze, calcola le scadenze e il ravvedimento operoso.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Cosa fa il professionista</h4>
+                        <p>Interpreta le anomalie, valuta la materialità, chiede spiegazioni al cliente, formula il giudizio finale.</p>
+                    </div>
+                </div>
+                <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted); margin-top: clamp(2px, 0.5vw, 6px);">Lei arriva alla conversazione con il cliente già informata: sa già dove guardare, ha già i numeri davanti. Da lì in poi è lavoro suo. Ed è esattamente dove il suo giudizio fa la differenza.</p>
+            </div>
+            <span class="slide-number">12 / 14</span>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SLIDE 13: PRIVACY E SICUREZZA
+         ============================================ -->
+    <section class="slide" data-slide="12">
+        <div class="paper">
+            <div class="binder-holes decorative">
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+            </div>
+            <div class="tab-strip decorative">
+                <div class="tab"></div>
+                <div class="tab"></div>
+                <div class="tab active"></div>
+                <div class="tab"></div>
+                <div class="tab active"></div>
+                <div class="tab active"></div>
+            </div>
+            <div class="paper-content">
+                <p class="label reveal">Sicurezza dei dati</p>
+                <h2 class="reveal">I dati dei suoi clienti<br><span class="accent-green">non escono dal suo studio.</span></h2>
+                <p class="reveal" style="max-width: 600px;">Sappiamo che la riservatezza è un prerequisito, non una feature. Tax DD AI è progettato per funzionare con la massima tutela dei dati fiscali.</p>
+                <div class="feature-grid reveal">
+                    <div class="feature-card green">
+                        <h4>Elaborazione locale</h4>
+                        <p>La classificazione dei documenti avviene con un modello AI che gira sul server dello studio. Nessun PDF viene inviato a servizi esterni per la classificazione.</p>
+                    </div>
+                    <div class="feature-card green">
+                        <h4>Nessun training sui dati</h4>
+                        <p>I documenti dei suoi clienti non vengono mai usati per addestrare modelli AI. L'estrazione avviene in tempo reale e i dati restano nel database dello studio.</p>
+                    </div>
+                    <div class="feature-card blue">
+                        <h4>Audit trail completo</h4>
+                        <p>Ogni operazione (classificazione, estrazione, verifica) è tracciata con timestamp. Sa sempre cosa il sistema ha letto e come lo ha interpretato.</p>
+                    </div>
+                </div>
+                <ul class="bullet-list reveal" style="margin-top: clamp(2px, 0.5vw, 6px);">
+                    <li style="font-size: var(--small-size);">DPIA completata (obbligatoria per Legge 132/2025, Garante autorità AI)</li>
+                    <li style="font-size: var(--small-size);">DPA Art. 28 GDPR pronto per la firma, con clausole AI e segreto professionale</li>
+                    <li style="font-size: var(--small-size);">Conservazione 10 anni di default (Art. 2220 CC), configurabile per studio</li>
+                    <li style="font-size: var(--small-size);">Diritto di accesso, cancellazione e portabilità integrati nel sistema</li>
+                    <li style="font-size: var(--small-size);">Registro sub-responsabili aggiornato (Anthropic con SCC, analytics in UE)</li>
+                </ul>
+            </div>
+            <span class="slide-number">13 / 14</span>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SLIDE 14: CTA / CONTATTI
+         ============================================ -->
+    <section class="slide title-slide" data-slide="13">
+        <div class="paper">
+            <div class="binder-holes decorative">
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+                <div class="binder-hole"></div>
+            </div>
+            <div class="tab-strip decorative">
+                <div class="tab active"></div>
+                <div class="tab active"></div>
+                <div class="tab active"></div>
+                <div class="tab active"></div>
+                <div class="tab active"></div>
+                <div class="tab active"></div>
+            </div>
+            <div class="paper-content">
+                <div class="logo-mark reveal">Tax DD<sup>AI</sup></div>
+                <hr class="divider reveal">
+                <h3 class="reveal" style="text-align: center;">Provi lo strumento sulla sua prossima pratica.</h3>
+                <div class="cta-box reveal">
+                    <h3>Faccia una prova con una pratica reale</h3>
+                    <p>Ci mandi lo ZIP di una due diligence gi&agrave; completata. Le facciamo girare il sistema e le mostriamo cosa trova. Cos&igrave; pu&ograve; confrontare con il lavoro gi&agrave; fatto dal suo team.</p>
+                    <a href="mailto:me@lapolazzati.com" class="email-link">me@lapolazzati.com</a>
+                </div>
+                <p class="reveal" style="text-align: center; font-size: var(--label-size); color: var(--text-muted); margin-top: clamp(4px, 0.5vw, 8px);">LR Tech &middot; lapolazzati.com</p>
+            </div>
+            <span class="slide-number">14 / 14</span>
+        </div>
+    </section>
+
+    <!-- ===========================================
+         SLIDE PRESENTATION CONTROLLER
+         =========================================== -->
+    <script>
+        class SlidePresentation {
+            constructor() {
+                this.slides = document.querySelectorAll('.slide');
+                this.currentSlide = 0;
+                this.isScrolling = false;
+
+                this.setupIntersectionObserver();
+                this.setupKeyboardNav();
+                this.setupTouchNav();
+                this.setupWheelNav();
+                this.setupProgressBar();
+                this.setupNavDots();
+            }
+
+            /* --- Intersection Observer: add .visible when in view --- */
+            setupIntersectionObserver() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            const idx = parseInt(entry.target.dataset.slide);
+                            if (!isNaN(idx)) {
+                                this.currentSlide = idx;
+                                this.updateNavDots();
+                                this.updateProgressBar();
+                            }
+                        }
+                    });
+                }, { threshold: 0.5 });
+
+                this.slides.forEach(slide => observer.observe(slide));
+            }
+
+            /* --- Keyboard: arrows, space, page up/down --- */
+            setupKeyboardNav() {
+                document.addEventListener('keydown', (e) => {
+                    switch (e.key) {
+                        case 'ArrowDown':
+                        case 'ArrowRight':
+                        case ' ':
+                        case 'PageDown':
+                            e.preventDefault();
+                            this.goToSlide(this.currentSlide + 1);
+                            break;
+                        case 'ArrowUp':
+                        case 'ArrowLeft':
+                        case 'PageUp':
+                            e.preventDefault();
+                            this.goToSlide(this.currentSlide - 1);
+                            break;
+                        case 'Home':
+                            e.preventDefault();
+                            this.goToSlide(0);
+                            break;
+                        case 'End':
+                            e.preventDefault();
+                            this.goToSlide(this.slides.length - 1);
+                            break;
+                    }
+                });
+            }
+
+            /* --- Touch/swipe --- */
+            setupTouchNav() {
+                let startY = 0;
+                document.addEventListener('touchstart', (e) => {
+                    startY = e.touches[0].clientY;
+                }, { passive: true });
+
+                document.addEventListener('touchend', (e) => {
+                    const diff = startY - e.changedTouches[0].clientY;
+                    if (Math.abs(diff) > 50) {
+                        this.goToSlide(this.currentSlide + (diff > 0 ? 1 : -1));
+                    }
+                }, { passive: true });
+            }
+
+            /* --- Mouse wheel --- */
+            setupWheelNav() {
+                document.addEventListener('wheel', (e) => {
+                    if (this.isScrolling) return;
+                    this.isScrolling = true;
+
+                    if (e.deltaY > 30) {
+                        this.goToSlide(this.currentSlide + 1);
+                    } else if (e.deltaY < -30) {
+                        this.goToSlide(this.currentSlide - 1);
+                    }
+
+                    setTimeout(() => { this.isScrolling = false; }, 800);
+                }, { passive: true });
+            }
+
+            /* --- Progress bar --- */
+            setupProgressBar() {
+                this.progressBar = document.getElementById('progressBar');
+                this.updateProgressBar();
+            }
+
+            updateProgressBar() {
+                if (this.progressBar) {
+                    const pct = ((this.currentSlide + 1) / this.slides.length) * 100;
+                    this.progressBar.style.width = pct + '%';
+                }
+            }
+
+            /* --- Nav dots --- */
+            setupNavDots() {
+                const container = document.getElementById('navDots');
+                this.slides.forEach((_, i) => {
+                    const dot = document.createElement('button');
+                    dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+                    dot.setAttribute('aria-label', `Slide ${i + 1}`);
+                    dot.addEventListener('click', () => this.goToSlide(i));
+                    container.appendChild(dot);
+                });
+                this.dots = container.querySelectorAll('.nav-dot');
+            }
+
+            updateNavDots() {
+                if (this.dots) {
+                    this.dots.forEach((d, i) => d.classList.toggle('active', i === this.currentSlide));
+                }
+            }
+
+            /* --- Navigate to slide --- */
+            goToSlide(index) {
+                if (index < 0 || index >= this.slides.length) return;
+                this.currentSlide = index;
+                this.slides[index].scrollIntoView({ behavior: 'smooth' });
+                this.updateNavDots();
+                this.updateProgressBar();
+            }
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            new SlidePresentation();
+        });
+    </script>
+</body>
+</html>

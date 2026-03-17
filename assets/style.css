@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700&family=Space+Grotesk:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg: #f7f5ef;
+  --ink: #121212;
+  --muted: #5c5c5c;
+  --accent: #2a4cff;
+  --accent-soft: rgba(42, 76, 255, 0.15);
+  --card: rgba(255, 255, 255, 0.65);
+  --border: rgba(18, 18, 18, 0.12);
+  --shadow: 0 18px 60px rgba(18, 18, 18, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  color: var(--ink);
+  background: radial-gradient(1200px 800px at 10% -10%, #ffefe2 0%, transparent 60%),
+    radial-gradient(1000px 900px at 100% 0%, #e7f0ff 0%, transparent 55%),
+    var(--bg);
+  min-height: 100vh;
+}
+
+main {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 72px 24px 96px;
+  position: relative;
+}
+
+.brand {
+  font-family: "Fraunces", serif;
+  font-size: clamp(2rem, 2.2vw + 1.4rem, 3.4rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 1.05rem;
+  max-width: 36rem;
+  margin-bottom: 32px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: 32px;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.hero p {
+  line-height: 1.7;
+  color: #1f1f1f;
+}
+
+.portrait {
+  width: 100%;
+  max-width: 320px;
+  border-radius: 22px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  justify-self: end;
+}
+
+.section-title {
+  font-family: "Fraunces", serif;
+  font-size: 1.35rem;
+  margin: 0 0 18px;
+}
+
+.link-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link-list a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.7);
+  transition: transform 180ms ease, border 180ms ease, box-shadow 180ms ease;
+}
+
+.link-list a span {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.link-list a:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: 0 10px 30px rgba(42, 76, 255, 0.18);
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.95rem;
+}
+
+.nav a {
+  text-decoration: none;
+  color: var(--muted);
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.nav a:hover {
+  color: var(--ink);
+  border-color: var(--accent);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.badge::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+.page-title {
+  font-family: "Fraunces", serif;
+  font-size: clamp(1.8rem, 1.4vw + 1.4rem, 2.4rem);
+  margin-bottom: 6px;
+}
+
+.page-subtitle {
+  color: var(--muted);
+  margin-bottom: 26px;
+}
+
+article {
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 18px;
+  padding: 28px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+article h1,
+article h2,
+article h3 {
+  font-family: "Fraunces", serif;
+}
+
+article p {
+  line-height: 1.7;
+  color: #1f1f1f;
+}
+
+footer {
+  margin-top: 36px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp 520ms ease forwards;
+}
+
+.fade-in.delay-1 {
+  animation-delay: 120ms;
+}
+
+.fade-in.delay-2 {
+  animation-delay: 240ms;
+}
+
+.fade-in.delay-3 {
+  animation-delay: 360ms;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 720px) {
+  main {
+    padding: 56px 18px 80px;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .portrait {
+    max-width: 100%;
+    justify-self: start;
+  }
+
+  .link-list a {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

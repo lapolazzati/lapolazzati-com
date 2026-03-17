@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Post — Lapolazzati</title>
+    <meta name="description" content="A post by Lapolazzati." />
+    <link rel="stylesheet" href="/assets/style.css" />
+  </head>
+  <body>
+    <main>
+      <div class="badge fade-in">Writing</div>
+      <div class="page-title fade-in delay-1" id="post-title">Post</div>
+      <p class="page-subtitle fade-in delay-2" id="post-meta">Loading…</p>
+
+      <article class="fade-in delay-3" id="post-body">
+        Loading post…
+      </article>
+
+      <ul class="nav">
+        <li><a href="/writing/">Writing</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/videos/">Videos</a></li>
+        <li><a href="/art/">Art</a></li>
+        <li><a href="/CV.html">Career</a></li>
+        <li><a href="/links/">Links</a></li>
+      </ul>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get("post");
+      const titleEl = document.getElementById("post-title");
+      const metaEl = document.getElementById("post-meta");
+      const bodyEl = document.getElementById("post-body");
+
+      if (!slug) {
+        titleEl.textContent = "Post not found";
+        metaEl.textContent = "Missing post slug.";
+        bodyEl.textContent = "Return to Writing and select a post.";
+      } else {
+        Promise.all([
+          fetch(`/posts/${slug}.md`).then((res) => res.text()),
+          fetch("/posts/posts.json").then((res) => res.json())
+        ])
+          .then(([markdown, posts]) => {
+            const post = posts.find((item) => item.slug === slug);
+            if (post) {
+              document.title = `${post.title} — Lapolazzati`;
+              titleEl.textContent = post.title;
+              metaEl.textContent = `${post.date} · ${post.readingTime}`;
+            }
+
+            bodyEl.innerHTML = marked.parse(markdown);
+          })
+          .catch(() => {
+            titleEl.textContent = "Post not found";
+            metaEl.textContent = "Unable to load markdown.";
+            bodyEl.textContent = "Check that the post exists.";
+          });
+      }
+    </script>
+  </body>
+</html>

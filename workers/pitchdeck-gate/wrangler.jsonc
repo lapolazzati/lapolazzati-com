@@ -1,0 +1,13 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "pitchdeck-gate",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-03-17",
+  "kv_namespaces": [
+    { "binding": "TOKENS" },
+    { "binding": "VIEWS" }
+  ],
+  "routes": [
+    { "pattern": "lapolazzati.com/deck/*", "zone_name": "lapolazzati.com" }
+  ]
+}

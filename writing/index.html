@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Writing — Lapolazzati</title>
+    <meta name="description" content="Writing and essays by Lapolazzati." />
+    <link rel="stylesheet" href="/assets/style.css" />
+  </head>
+  <body>
+    <main>
+      <div class="badge fade-in">Writing</div>
+      <div class="page-title fade-in delay-1">Writing</div>
+      <p class="page-subtitle fade-in delay-2">
+        Essays, notes, and working drafts. Republishable to Substack and X.
+      </p>
+
+      <section class="card fade-in delay-3">
+        <h2 class="section-title">Latest posts</h2>
+        <ul class="link-list" id="post-list">
+          <li>Loading posts…</li>
+        </ul>
+      </section>
+
+      <ul class="nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/videos/">Videos</a></li>
+        <li><a href="/art/">Art</a></li>
+        <li><a href="/CV.html">Career</a></li>
+        <li><a href="/links/">Links</a></li>
+      </ul>
+    </main>
+
+    <script>
+      const list = document.getElementById("post-list");
+
+      fetch("/posts/posts.json")
+        .then((res) => res.json())
+        .then((posts) => {
+          if (!Array.isArray(posts) || posts.length === 0) {
+            list.innerHTML = "<li>No posts yet.</li>";
+            return;
+          }
+
+          list.innerHTML = posts
+            .map(
+              (post) => `
+                <li>
+                  <a href="/writing/post.html?post=${post.slug}">
+                    <strong>${post.title}</strong>
+                    <span>${post.date} · ${post.excerpt}</span>
+                  </a>
+                </li>`
+            )
+            .join("");
+        })
+        .catch(() => {
+          list.innerHTML = "<li>Could not load posts.</li>";
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,3 @@
+.DS_Store
+node_modules/
+workers/pitchdeck-gate/node_modules/
